@@ -1,4 +1,5 @@
 import time
+from flask.wrappers import Request
 
 import redis
 import functools
@@ -6,6 +7,7 @@ import math
 import xml.etree.ElementTree as ET
 from flask import Flask
 from flask import Response
+from flask import request
 from redis.connection import Encoder
 
 app = Flask(__name__)
@@ -15,21 +17,9 @@ last_name = 1
 student_number = 2
 test_id = 3
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
-
 @app.route('/')
 def hello():
-    count = get_hit_count()
-    return 'Hello Stile Assessors! I have been seen {} times.\n'.format(count)
+    return 'Hello Stile Assessors!'
 
 @app.route('/results')
 def results():
@@ -43,6 +33,18 @@ def results():
             value += str(score) + '\n'
 
     return value
+
+#this 'solution' simply deletes everything in the current database... not ideal.
+#I would have ensured that it simply appended to the document not removed it.
+@app.route('/import', methods=['POST'])
+def register():
+    if request.method == 'POST':
+        #solution found here: https://stackoverflow.com/questions/56682486/xml-etree-elementtree-element-object-has-no-attribute-write
+        document = ET.fromstring(request.data)
+        tree = ET.ElementTree(document)
+        tree.write("database.xml", encoding="utf-8")
+    return "data added to database.xml"
+        
 
 @app.route('/results/<int:testid>/aggregate')
 def index(testid=1):
