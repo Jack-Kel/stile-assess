@@ -1,0 +1,63 @@
+Approach:
+After reading the requirements with a cup of coffee I ended up breaking this problem down into two parts. The GET request and the POST request. 
+I left the POST request until last as I found it the hardest to wrap my head around. I decided that my first task would be to simply get docker working as that is something I have struggled with in the past. 
+Once that was done I set about planning my algorithms, learning how to use Element Tree, and started work on the GET request portion.
+After that I moved on to some error handling and then pushed my progress to github.
+This is when I worked out how to get the POST solution working. It was at this stage that I realised how these two parts could have been synced up after all. 
+By having the information saved during the POST stage be the record that is analysed by the GET requests we would have a cohesive product. Unfotunately it was a little too late to refactor my solution.
+I finsished by jotting down my thoughts/observations/strategies in this README document so I apologise if the following is riddled with spelling/grammar errors (or is over-familiar).
+
+To run the program:
+1. All that should need to be done (hopefully) is run:
+    docker-compose up
+
+Chosen Technologies:
+1. Flask - I chose flask as I have only a small amount of experience with docker and the 'getting started' tutorial for docker used flask.
+As docker was one of my key worries when it came to being able to submit a workable solution I followed the guide and learned how to use flask along the way.
+I was more confident in my ability to learn a new framework than to troubleshoot docker towards the end of a project.
+
+2. Python - Ol' reliable! My language of choice when it comes to a project where I know I will have to be relying on some new tools.
+
+3. Element Tree - This seemed to be the most detailed documentation API for handling XML data.
+
+4. Toggl - Always good to keep track of how long you are spending on particular elements of a project. 
+I specifically chose to track my time in this manner as I recognised that I would be using a decent number of new tools and wanted to showcase my ability to learn and use these tools in a set timeframe.
+I have included the time sheet breakdown in my submission in case seeing how long I spent on particular features is interesting or useful. :) 
+
+5. NumPy (not used) - I would have used this for the stddev and percentile calculations however I could not figure out how to ensure it was included in the docker build.
+I wanted to note it's lack of inclusion, however, as I can recognise it's the right library to use in this situation
+
+6. Docker - Used as the documentation specified that it would make the process far easier for the assessors, which I want to do.
+
+Assumptions (no particular order):
+
+1. The documentation did not ask for stddev in the list of requirements but did include it in the example.
+I have left it out of the final implementation (partly because it would have taken me a little while to figure out the maths)
+    
+2. I have assumed that the data from 'my buddy' is in the correct format for any future files.
+
+Notes on my solution:
+
+- I know the database is not good. Obviously we don't just want a local file storing the POSTed xml.
+In a real solution it would be hosted somewhere (and the local version would be synced with it whenever the bills are being paid)
+
+- I worked with the sample_results.xml file for all my result response work. This is 100% hard-coded. 
+I feel that a better solution would have the POST method take in new results that can then be queried in the aggregate endpoint
+
+- The current method for checking a document for integrity is within my GET response. 
+This is not ideal as the document should really be checked when it arrives and therefore the poor work experience kid is given far more notice.
+
+- I have implemented exactly 0 automated tests. I really did simply run out of time to implement this in an acceptable timeframe. 
+Automated tests are incredibly important and I do not want their lack of inclusion to imply that I think otherwise. 
+If anything it's because I think they are so integral that I found it hard to implement what I felt would have been a substandard approach.
+Tests are going to be a key talking point in our follow up chat!
+
+- There is a part of my code which contains many nested loops and if statements. This is pretty rubbish for performance. 
+This would be one of the first things I would tidy up and make more efficient. I believe that this has come about as a result of learning new techologies in a timed environmnent. 
+
+- My port is 5000 and not 4567 as is mentioned in the documentation. I left it as the default and got a little stressed when changing it seemed to break some things.
+That might have been a bit too honest :shrug:
+
+- My percentage float returns long numbers which is not ideal for accurate calculations. A proper 'two decimal place' solution would have been better.
+
+Thank you for your consideration, I look forward to talking through this solution with you!

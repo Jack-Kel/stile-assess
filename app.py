@@ -92,9 +92,9 @@ def index(testid=1):
     #total score divided by number for mean, divide by available marks and times 100 for percentage
     mean:float = total_score/number_of_scores/available_marks*100
     #see below for where percentile came from
-    p25 = percentile(scores, percent = 0.25)
-    p50 = percentile(scores, percent = 0.5)
-    p75 = percentile(scores, percent = 0.75)
+    p25:float = percentile(scores, percent = 0.25)/available_marks*100
+    p50:float = percentile(scores, percent = 0.5)/available_marks*100
+    p75:float = percentile(scores, percent = 0.75)/available_marks*100
 
     values = {
         'mean': mean, 
@@ -138,5 +138,5 @@ def data_fails_check(element):
         result = True
     if result == True:
         print("sorry this one failed")
-        #here is where I would put the print output for the poor intern to manually handle
+        #here is where I would put the print output for the poor work experience kid to manually handle
     return result
